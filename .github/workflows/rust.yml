@@ -103,7 +103,7 @@ jobs:
         with:
           use-cross: true
           command: test
-          args: --verbose --all-features --workspace --target ${{ matrix.target }}
+          args: --target ${{ matrix.target }}
   code-coverage:
     runs-on: ubuntu-latest
     env:
