@@ -77,6 +77,7 @@ jobs:
             target: aarch64-apple-darwin
     runs-on: ${{ matrix.os }}
     steps:
+      - uses: actions/checkout@v4
       - name: Install Rust
         uses: actions-rs/toolchain@v1
         with:
@@ -103,17 +104,17 @@ jobs:
         with:
           use-cross: true
           command: test
-          args: --target ${{ matrix.target }}
+          args: --verbose --all-features --workspace --target ${{ matrix.target }}
   code-coverage:
     runs-on: ubuntu-latest
     env:
       CARGO_TERM_COLOR: always
     steps:
       - uses: actions/checkout@v4
-      - name: Install ffmpeg
+      - name: Install deps
         run: |
           sudo apt-get update
-          sudo apt install -y libsoxr-dev
+          sudo apt install -y libsoxr-dev libopus-dev
       - name: Install Rust
         run: rustup update stable
       - name: Install cargo-llvm-cov
