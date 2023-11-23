@@ -1,6 +1,7 @@
 name: Release
 on:
   push:
+    branches: [ main ]
     tags:
       - 'v*.*.*'
   workflow_dispatch:
@@ -138,11 +139,9 @@ jobs:
     steps:
       - name: create_release 
         id: create_release
-        uses: actions/create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        uses: marvinpinto/action-automatic-releases@latest
         with:
-          tag_name: ${{ github.event_name == 'workflow_dispatch' && '' || github.ref }}
-          release_name: Build ${{ github.event_name == 'workflow_dispatch' && 'development' || github.ref }}
-          draft: ${{ github.event_name == 'workflow_dispatch' }}
-          prerelease: true  
+          repo_token: "${{ secrets.GITHUB_TOKEN }}"
+          automatic_release_tag: ${{ github.event_name == 'workflow_dispatch' && 'latest' || (github.ref == 'refs/heads/main' && 'latest') || github.ref }}
+          title: Build ${{ github.event_name == 'workflow_dispatch' && 'development' || github.ref }}
+          prerelease: true
