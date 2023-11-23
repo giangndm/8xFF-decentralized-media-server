@@ -41,10 +41,10 @@ jobs:
             os: ubuntu-latest
             rust: stable
             target: aarch64-unknown-linux-gnu
-          - build: linux gnu armv
+          - build: linux gnu arm
             os: ubuntu-latest
             rust: stable
-            target: armv-unknown-linux-gnu
+            target: arm-unknown-linux-gnu
           - build: linux gnu armv7
             os: ubuntu-latest
             rust: stable
