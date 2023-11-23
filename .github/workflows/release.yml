@@ -19,7 +19,7 @@ jobs:
           - linux gnu x64
           # - linux musl x64
           - linux gnu aarch64
-          - linux gnueabihf arm
+          # - linux gnueabihf arm
           - linux gnueabihf armv7
           # - linux gnu mips
           - linux gnuabi64 mips64
@@ -41,10 +41,10 @@ jobs:
             os: ubuntu-latest
             rust: stable
             target: aarch64-unknown-linux-gnu
-          - build: linux gnueabihf arm
-            os: ubuntu-latest
-            rust: stable
-            target: arm-unknown-linux-gnueabihf
+          # - build: linux gnueabihf arm
+          #   os: ubuntu-latest
+          #   rust: stable
+          #   target: arm-unknown-linux-gnueabihf
           - build: linux gnueabihf armv7
             os: ubuntu-latest
             rust: stable
