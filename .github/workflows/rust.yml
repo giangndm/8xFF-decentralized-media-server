@@ -22,7 +22,7 @@ jobs:
           - linux gnu mips
           - linux gnuabi64 mips64
           - linux gnuabi64 mips64el
-          - linux gnu mipsel
+          # - linux gnu mipsel
           # - linux musl aarch64
           - macos x64
           - macos aarch64
