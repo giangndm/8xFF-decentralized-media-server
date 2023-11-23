@@ -17,13 +17,13 @@ jobs:
           - linux gnu x64
           # - linux musl x64
           - linux gnu aarch64
+          # - linux musl aarch64
           # - linux gnueabihf arm
-          - linux gnueabihf armv7
+          # - linux gnueabihf armv7
           # - linux gnu mips
           - linux gnuabi64 mips64
           - linux gnuabi64 mips64el
           # - linux gnu mipsel
-          # - linux musl aarch64
           - macos x64
           - macos aarch64
         include:
@@ -43,10 +43,10 @@ jobs:
           #   os: ubuntu-latest
           #   rust: stable
           #   target: arm-unknown-linux-gnueabihf
-          - build: linux gnueabihf armv7
-            os: ubuntu-latest
-            rust: stable
-            target: armv7-unknown-linux-gnueabihf
+          # - build: linux gnueabihf armv7
+          #   os: ubuntu-latest
+          #   rust: stable
+          #   target: armv7-unknown-linux-gnueabihf
           # - build: linux gnu mips
           #   os: ubuntu-latest
           #   rust: 1.71.1
