@@ -19,7 +19,7 @@ jobs:
           - linux gnu aarch64
           - linux gnueabihf arm
           - linux gnueabihf armv7
-          - linux gnu mips
+          # - linux gnu mips
           - linux gnuabi64 mips64
           - linux gnuabi64 mips64el
           # - linux gnu mipsel
@@ -47,10 +47,10 @@ jobs:
             os: ubuntu-latest
             rust: stable
             target: armv7-unknown-linux-gnueabihf
-          - build: linux gnu mips
-            os: ubuntu-latest
-            rust: 1.71.1
-            target: mips-unknown-linux-gnu
+          # - build: linux gnu mips
+          #   os: ubuntu-latest
+          #   rust: 1.71.1
+          #   target: mips-unknown-linux-gnu
           - build: linux gnuabi64 mips64
             os: ubuntu-latest
             rust: 1.71.1
@@ -59,10 +59,10 @@ jobs:
             os: ubuntu-latest
             rust: 1.71.1
             target: mips64el-unknown-linux-gnuabi64
-          - build: linux gnu mipsel
-            os: ubuntu-latest
-            rust: 1.71.1
-            target: mipsel-unknown-linux-gnu
+          # - build: linux gnu mipsel
+          #   os: ubuntu-latest
+          #   rust: 1.71.1
+          #   target: mipsel-unknown-linux-gnu
           # - build: linux musl aarch64
           #   os: ubuntu-latest
           #   rust: stable
