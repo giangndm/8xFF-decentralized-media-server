@@ -50,7 +50,7 @@ async fn main() {
         http_server.start().await;
         let tx_c = tx.clone();
         async_std::task::spawn(async move {
-            log::info!("Start http server on {}", http_port);
+            log::info!("Start http server on port {}", http_port);
             while let Some(event) = http_server.recv().await {
                 tx_c.send(event).await;
             }
