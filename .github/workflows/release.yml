@@ -19,11 +19,11 @@ jobs:
           - linux gnu x64
           # - linux musl x64
           - linux gnu aarch64
-          - linux gnu arm
-          - linux gnu armv7
+          - linux gnueabihf arm
+          - linux gnueabihf armv7
           - linux gnu mips
-          - linux gnu mips64
-          - linux gnu mips64el
+          - linux gnuabi64 mips64
+          - linux gnuabi64 mips64el
           - linux gnu mipsel
           # - linux musl aarch64
           - macos x64
@@ -41,23 +41,23 @@ jobs:
             os: ubuntu-latest
             rust: stable
             target: aarch64-unknown-linux-gnu
-          - build: linux gnu arm
+          - build: linux gnueabihf arm
             os: ubuntu-latest
             rust: stable
-            target: arm-unknown-linux-gnu
-          - build: linux gnu armv7
+            target: arm-unknown-linux-gnueabihf
+          - build: linux gnueabihf armv7
             os: ubuntu-latest
             rust: stable
-            target: armv7-unknown-linux-gnu
+            target: armv7-unknown-linux-gnueabihf
           - build: linux gnu mips
             os: ubuntu-latest
             rust: stable
             target: mips-unknown-linux-gnu
-          - build: linux gnu mips64
+          - build: linux gnuabi64 mips64
             os: ubuntu-latest
             rust: stable
             target: mips64-unknown-linux-gnuabi64
-          - build: linux gnu mips64el
+          - build: linux gnuabi64 mips64el
             os: ubuntu-latest
             rust: stable
             target: mips64el-unknown-linux-gnuabi64
@@ -88,6 +88,28 @@ jobs:
 
       - name: Checkout repository
         uses: actions/checkout@v4
+
+      - name: Install Rust
+        uses: actions-rs/toolchain@v1
+        with:
+          toolchain: ${{ matrix.rust }}
+          profile: minimal
+          override: true
+          target: ${{ matrix.target }}
+
+      - name: Install dev-tools
+        if: matrix.os == 'ubuntu-latest'
+        run: sudo apt-get install -y --no-install-recommends pkg-config musl-dev musl-tools
+
+      - name: Install deps (ubuntu)
+        if: matrix.os == 'ubuntu-latest'
+        run: sudo apt-get install -y --no-install-recommends libssl-dev libsoxr-dev libopus-dev
+
+      - name: Install deps (macos)
+        if: matrix.os == 'macos-latest'
+        run: |
+          brew update
+          brew install libsoxr
 
       - name: Build
         uses: actions-rs/cargo@v1
