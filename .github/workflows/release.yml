@@ -19,7 +19,7 @@ jobs:
           - linux gnu x64
           # - linux musl x64
           - linux gnu aarch64
-          - linux gnu armv
+          - linux gnu arm
           - linux gnu armv7
           - linux gnu mips
           - linux gnu mips64
