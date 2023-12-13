@@ -151,13 +151,13 @@ jobs:
 
       - name: Install deps (ubuntu)
         if: matrix.os == 'ubuntu-latest'
-        run: sudo apt-get install -y --no-install-recommends libssl-dev libopus-dev libfdk-aac-dev
+        run: sudo apt-get install -y --no-install-recommends libsoxr-dev libssl-dev libopus-dev libfdk-aac-dev
 
       - name: Install deps (macos)
         if: matrix.os == 'macos-latest'
         run: |
           brew update
-          brew install openssl opus fdk-aac
+          brew install libsoxr openssl opus fdk-aac
 
       - name: Build
         uses: actions-rs/cargo@v1
