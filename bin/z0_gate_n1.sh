@@ -2,7 +2,6 @@ RUST_LOG=info \
 RUST_BACKTRACE=1 \
 cargo run -- \
     --http-port 3000 \
-    --enable-private-ip \
     --sdn-port 10001 \
     --sdn-zone-id 0 \
     --sdn-zone-node-id 1 \

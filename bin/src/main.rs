@@ -50,13 +50,9 @@ struct Args {
     #[arg(env, long)]
     node_ip_alt_cloud: Option<CloudProvider>,
 
-    /// Enable private IP addresses for the node.
-    #[arg(env, long)]
-    enable_private_ip: bool,
-
-    /// Enable IPv6 support.
-    #[arg(env, long)]
-    enable_ipv6: bool,
+    /// Which IP addresses are allowed to bind to the node.
+    #[arg(env, long, value_delimiter = ',')]
+    node_ip_listen_prefix: Option<Vec<String>>,
 
     /// Cluster secret key used for secure communication between nodes.
     #[arg(env, long, default_value = "insecure")]
@@ -147,9 +143,17 @@ async fn main() {
             .expect("Should have list interfaces")
             .into_iter()
             .filter(|(_, ip)| {
-                let allow = match ip {
-                    IpAddr::V4(ipv4) => !ipv4.is_private() || args.enable_private_ip,
-                    IpAddr::V6(ipv6) => !ipv6.is_unspecified() && !ipv6.is_multicast() && (!ipv6.is_loopback() || args.enable_private_ip) && args.enable_ipv6,
+                let allow = if let Some(filter_ip_prefix) = args.node_ip_listen_prefix.as_ref() {
+                    let mut select = false;
+                    for prefix in filter_ip_prefix.iter() {
+                        if ip.to_string().starts_with(prefix) {
+                            select = true;
+                            break;
+                        }
+                    }
+                    select
+                } else {
+                    true
                 };
                 allow && std::net::UdpSocket::bind(SocketAddr::new(*ip, sdn_port)).is_ok()
             })
