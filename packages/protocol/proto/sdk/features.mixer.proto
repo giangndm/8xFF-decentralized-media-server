@@ -2,7 +2,7 @@ syntax = "proto3";
 
 import "shared.proto";
 
-package features.mixer;
+package features_mixer;
 
 enum Mode {
     AUTO = 0;

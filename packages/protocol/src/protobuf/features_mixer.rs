@@ -7,7 +7,7 @@ pub struct Config {
     #[prost(string, repeated, tag = "2")]
     pub outputs: ::prost::alloc::vec::Vec<::prost::alloc::string::String>,
     #[prost(message, repeated, tag = "3")]
-    pub sources: ::prost::alloc::vec::Vec<super::super::shared::receiver::Source>,
+    pub sources: ::prost::alloc::vec::Vec<super::shared::receiver::Source>,
 }
 #[derive(serde::Serialize)]
 #[derive(Clone, PartialEq, ::prost::Message)]
@@ -21,17 +21,13 @@ pub mod request {
     #[derive(Clone, PartialEq, ::prost::Message)]
     pub struct Attach {
         #[prost(message, repeated, tag = "1")]
-        pub sources: ::prost::alloc::vec::Vec<
-            super::super::super::shared::receiver::Source,
-        >,
+        pub sources: ::prost::alloc::vec::Vec<super::super::shared::receiver::Source>,
     }
     #[derive(serde::Serialize)]
     #[derive(Clone, PartialEq, ::prost::Message)]
     pub struct Detach {
         #[prost(message, repeated, tag = "1")]
-        pub sources: ::prost::alloc::vec::Vec<
-            super::super::super::shared::receiver::Source,
-        >,
+        pub sources: ::prost::alloc::vec::Vec<super::super::shared::receiver::Source>,
     }
     #[derive(serde::Serialize)]
     #[derive(Clone, PartialEq, ::prost::Oneof)]
@@ -79,9 +75,7 @@ pub mod server_event {
         #[prost(uint32, tag = "1")]
         pub slot: u32,
         #[prost(message, optional, tag = "2")]
-        pub source: ::core::option::Option<
-            super::super::super::shared::receiver::Source,
-        >,
+        pub source: ::core::option::Option<super::super::shared::receiver::Source>,
     }
     #[derive(serde::Serialize)]
     #[derive(Clone, Copy, PartialEq, ::prost::Message)]

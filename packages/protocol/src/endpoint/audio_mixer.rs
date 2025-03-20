@@ -1,7 +1,7 @@
 use serde::{Deserialize, Serialize};
 
 use crate::{
-    protobuf::features::mixer::Mode,
+    protobuf::features_mixer::Mode,
     transport::{LocalTrackId, RemoteTrackId},
 };
 

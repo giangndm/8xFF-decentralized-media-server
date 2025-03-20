@@ -5,23 +5,23 @@ import "sdk/features.mixer.proto";
 package features;
 
 message Config {
-    optional features.mixer.Config mixer = 1;
+    optional features_mixer.Config mixer = 1;
 }
 
 message Request {
     oneof request {
-        features.mixer.Request mixer = 1;
+        features_mixer.Request mixer = 1;
     }
 }
 
 message Response {
     oneof response {
-        features.mixer.Response mixer = 1;
+        features_mixer.Response mixer = 1;
     }
 }
 
 message ServerEvent {
     oneof event {
-        features.mixer.ServerEvent mixer = 1;
+        features_mixer.ServerEvent mixer = 1;
     }
 }

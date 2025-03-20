@@ -3,7 +3,7 @@
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct Config {
     #[prost(message, optional, tag = "1")]
-    pub mixer: ::core::option::Option<mixer::Config>,
+    pub mixer: ::core::option::Option<super::features_mixer::Config>,
 }
 #[derive(serde::Serialize)]
 #[derive(Clone, PartialEq, ::prost::Message)]
@@ -17,7 +17,7 @@ pub mod request {
     #[derive(Clone, PartialEq, ::prost::Oneof)]
     pub enum Request {
         #[prost(message, tag = "1")]
-        Mixer(super::mixer::Request),
+        Mixer(super::super::features_mixer::Request),
     }
 }
 #[derive(serde::Serialize)]
@@ -32,7 +32,7 @@ pub mod response {
     #[derive(Clone, Copy, PartialEq, ::prost::Oneof)]
     pub enum Response {
         #[prost(message, tag = "1")]
-        Mixer(super::mixer::Response),
+        Mixer(super::super::features_mixer::Response),
     }
 }
 #[derive(serde::Serialize)]
@@ -47,6 +47,6 @@ pub mod server_event {
     #[derive(Clone, PartialEq, ::prost::Oneof)]
     pub enum Event {
         #[prost(message, tag = "1")]
-        Mixer(super::mixer::ServerEvent),
+        Mixer(super::super::features_mixer::ServerEvent),
     }
 }

@@ -9,7 +9,7 @@ description = "Atm0s Media Server"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-media-server-protocol = { workspace = true, features = ["quinn-rpc"] }
+media-server-protocol = { workspace = true }
 media-server-secure = { workspace = true, features = ["jwt-secure"] }
 media-server-console-front = { workspace = true, optional = true }
 media-server-runner = { workspace = true, optional = true }

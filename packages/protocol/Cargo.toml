@@ -16,16 +16,14 @@ derivative = { workspace = true }
 derive_more = { workspace = true, features = ["full"] }
 rand = { workspace = true }
 prost = { workspace = true }
+tonic = { workspace = true }
 serde = { workspace = true, features = ["derive"] }
-quinn = { workspace = true, optional = true }
 tokio = { workspace = true, features = ["rt"] }
 
 [build-dependencies]
-prost-build = { workspace = true }
-tera = { workspace = true }
+tonic-build = { workspace = true }
 serde = { workspace = true, features = ["derive"] }
 
 [features]
 default = []
 build-protobuf = []
-quinn-rpc = ["quinn"]

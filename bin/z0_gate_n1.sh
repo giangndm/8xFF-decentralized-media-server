@@ -7,7 +7,7 @@ cargo run -- \
     --sdn-zone-id 0 \
     --sdn-zone-node-id 1 \
     --seeds-from-url "http://localhost:8080/api/cluster/seeds?zone_id=0&node_type=Gateway" \
-    --workers 2 \
+    --workers 4 \
     gateway \
         --lat 10 \
         --lon 20 \

@@ -764,167 +764,499 @@ pub mod get_events {
         pub meta: ::core::option::Option<::prost::alloc::string::String>,
     }
 }
-#[allow(async_fn_in_trait)]
-pub trait MediaConnectorServiceHandler<CTX> {
-    async fn rooms(&self, ctx: &CTX, req: GetParams) -> Option<GetRooms>;
-    async fn peers(&self, ctx: &CTX, req: GetPeerParams) -> Option<GetPeers>;
-    async fn sessions(&self, ctx: &CTX, req: GetParams) -> Option<GetSessions>;
-    async fn events(&self, ctx: &CTX, req: GetEventParams) -> Option<GetEvents>;
-}
-pub struct MediaConnectorServiceClient<
-    D,
-    C: crate::rpc::RpcClient<D, S>,
-    S: crate::rpc::RpcStream,
-> {
-    client: C,
-    _tmp: std::marker::PhantomData<(D, S)>,
-}
-impl<D, C: crate::rpc::RpcClient<D, S>, S: crate::rpc::RpcStream> Clone
-for MediaConnectorServiceClient<D, C, S> {
-    fn clone(&self) -> Self {
-        Self {
-            client: self.client.clone(),
-            _tmp: Default::default(),
+/// Generated client implementations.
+pub mod media_connector_client {
+    #![allow(
+        unused_variables,
+        dead_code,
+        missing_docs,
+        clippy::wildcard_imports,
+        clippy::let_unit_value,
+    )]
+    use tonic::codegen::*;
+    use tonic::codegen::http::Uri;
+    #[derive(Debug, Clone)]
+    pub struct MediaConnectorClient<T> {
+        inner: tonic::client::Grpc<T>,
+    }
+    impl MediaConnectorClient<tonic::transport::Channel> {
+        /// Attempt to create a new client by connecting to a given endpoint.
+        pub async fn connect<D>(dst: D) -> Result<Self, tonic::transport::Error>
+        where
+            D: TryInto<tonic::transport::Endpoint>,
+            D::Error: Into<StdError>,
+        {
+            let conn = tonic::transport::Endpoint::new(dst)?.connect().await?;
+            Ok(Self::new(conn))
+        }
+    }
+    impl<T> MediaConnectorClient<T>
+    where
+        T: tonic::client::GrpcService<tonic::body::BoxBody>,
+        T::Error: Into<StdError>,
+        T::ResponseBody: Body<Data = Bytes> + std::marker::Send + 'static,
+        <T::ResponseBody as Body>::Error: Into<StdError> + std::marker::Send,
+    {
+        pub fn new(inner: T) -> Self {
+            let inner = tonic::client::Grpc::new(inner);
+            Self { inner }
+        }
+        pub fn with_origin(inner: T, origin: Uri) -> Self {
+            let inner = tonic::client::Grpc::with_origin(inner, origin);
+            Self { inner }
+        }
+        pub fn with_interceptor<F>(
+            inner: T,
+            interceptor: F,
+        ) -> MediaConnectorClient<InterceptedService<T, F>>
+        where
+            F: tonic::service::Interceptor,
+            T::ResponseBody: Default,
+            T: tonic::codegen::Service<
+                http::Request<tonic::body::BoxBody>,
+                Response = http::Response<
+                    <T as tonic::client::GrpcService<tonic::body::BoxBody>>::ResponseBody,
+                >,
+            >,
+            <T as tonic::codegen::Service<
+                http::Request<tonic::body::BoxBody>,
+            >>::Error: Into<StdError> + std::marker::Send + std::marker::Sync,
+        {
+            MediaConnectorClient::new(InterceptedService::new(inner, interceptor))
+        }
+        /// Compress requests with the given encoding.
+        ///
+        /// This requires the server to support it otherwise it might respond with an
+        /// error.
+        #[must_use]
+        pub fn send_compressed(mut self, encoding: CompressionEncoding) -> Self {
+            self.inner = self.inner.send_compressed(encoding);
+            self
+        }
+        /// Enable decompressing responses.
+        #[must_use]
+        pub fn accept_compressed(mut self, encoding: CompressionEncoding) -> Self {
+            self.inner = self.inner.accept_compressed(encoding);
+            self
+        }
+        /// Limits the maximum size of a decoded message.
+        ///
+        /// Default: `4MB`
+        #[must_use]
+        pub fn max_decoding_message_size(mut self, limit: usize) -> Self {
+            self.inner = self.inner.max_decoding_message_size(limit);
+            self
+        }
+        /// Limits the maximum size of an encoded message.
+        ///
+        /// Default: `usize::MAX`
+        #[must_use]
+        pub fn max_encoding_message_size(mut self, limit: usize) -> Self {
+            self.inner = self.inner.max_encoding_message_size(limit);
+            self
+        }
+        pub async fn rooms(
+            &mut self,
+            request: impl tonic::IntoRequest<super::GetParams>,
+        ) -> std::result::Result<tonic::Response<super::GetRooms>, tonic::Status> {
+            self.inner
+                .ready()
+                .await
+                .map_err(|e| {
+                    tonic::Status::unknown(
+                        format!("Service was not ready: {}", e.into()),
+                    )
+                })?;
+            let codec = tonic::codec::ProstCodec::default();
+            let path = http::uri::PathAndQuery::from_static(
+                "/cluster_connector.MediaConnector/Rooms",
+            );
+            let mut req = request.into_request();
+            req.extensions_mut()
+                .insert(GrpcMethod::new("cluster_connector.MediaConnector", "Rooms"));
+            self.inner.unary(req, path, codec).await
+        }
+        pub async fn peers(
+            &mut self,
+            request: impl tonic::IntoRequest<super::GetPeerParams>,
+        ) -> std::result::Result<tonic::Response<super::GetPeers>, tonic::Status> {
+            self.inner
+                .ready()
+                .await
+                .map_err(|e| {
+                    tonic::Status::unknown(
+                        format!("Service was not ready: {}", e.into()),
+                    )
+                })?;
+            let codec = tonic::codec::ProstCodec::default();
+            let path = http::uri::PathAndQuery::from_static(
+                "/cluster_connector.MediaConnector/Peers",
+            );
+            let mut req = request.into_request();
+            req.extensions_mut()
+                .insert(GrpcMethod::new("cluster_connector.MediaConnector", "Peers"));
+            self.inner.unary(req, path, codec).await
+        }
+        pub async fn sessions(
+            &mut self,
+            request: impl tonic::IntoRequest<super::GetParams>,
+        ) -> std::result::Result<tonic::Response<super::GetSessions>, tonic::Status> {
+            self.inner
+                .ready()
+                .await
+                .map_err(|e| {
+                    tonic::Status::unknown(
+                        format!("Service was not ready: {}", e.into()),
+                    )
+                })?;
+            let codec = tonic::codec::ProstCodec::default();
+            let path = http::uri::PathAndQuery::from_static(
+                "/cluster_connector.MediaConnector/Sessions",
+            );
+            let mut req = request.into_request();
+            req.extensions_mut()
+                .insert(GrpcMethod::new("cluster_connector.MediaConnector", "Sessions"));
+            self.inner.unary(req, path, codec).await
+        }
+        pub async fn events(
+            &mut self,
+            request: impl tonic::IntoRequest<super::GetEventParams>,
+        ) -> std::result::Result<tonic::Response<super::GetEvents>, tonic::Status> {
+            self.inner
+                .ready()
+                .await
+                .map_err(|e| {
+                    tonic::Status::unknown(
+                        format!("Service was not ready: {}", e.into()),
+                    )
+                })?;
+            let codec = tonic::codec::ProstCodec::default();
+            let path = http::uri::PathAndQuery::from_static(
+                "/cluster_connector.MediaConnector/Events",
+            );
+            let mut req = request.into_request();
+            req.extensions_mut()
+                .insert(GrpcMethod::new("cluster_connector.MediaConnector", "Events"));
+            self.inner.unary(req, path, codec).await
         }
     }
 }
-impl<
-    D,
-    C: crate::rpc::RpcClient<D, S>,
-    S: crate::rpc::RpcStream,
-> MediaConnectorServiceClient<D, C, S> {
-    pub fn new(client: C) -> Self {
-        Self {
-            client,
-            _tmp: Default::default(),
+/// Generated server implementations.
+pub mod media_connector_server {
+    #![allow(
+        unused_variables,
+        dead_code,
+        missing_docs,
+        clippy::wildcard_imports,
+        clippy::let_unit_value,
+    )]
+    use tonic::codegen::*;
+    /// Generated trait containing gRPC methods that should be implemented for use with MediaConnectorServer.
+    #[async_trait]
+    pub trait MediaConnector: std::marker::Send + std::marker::Sync + 'static {
+        async fn rooms(
+            &self,
+            request: tonic::Request<super::GetParams>,
+        ) -> std::result::Result<tonic::Response<super::GetRooms>, tonic::Status>;
+        async fn peers(
+            &self,
+            request: tonic::Request<super::GetPeerParams>,
+        ) -> std::result::Result<tonic::Response<super::GetPeers>, tonic::Status>;
+        async fn sessions(
+            &self,
+            request: tonic::Request<super::GetParams>,
+        ) -> std::result::Result<tonic::Response<super::GetSessions>, tonic::Status>;
+        async fn events(
+            &self,
+            request: tonic::Request<super::GetEventParams>,
+        ) -> std::result::Result<tonic::Response<super::GetEvents>, tonic::Status>;
+    }
+    #[derive(Debug)]
+    pub struct MediaConnectorServer<T> {
+        inner: Arc<T>,
+        accept_compression_encodings: EnabledCompressionEncodings,
+        send_compression_encodings: EnabledCompressionEncodings,
+        max_decoding_message_size: Option<usize>,
+        max_encoding_message_size: Option<usize>,
+    }
+    impl<T> MediaConnectorServer<T> {
+        pub fn new(inner: T) -> Self {
+            Self::from_arc(Arc::new(inner))
         }
-    }
-    pub async fn rooms(&self, dest: D, req: GetParams) -> Option<GetRooms> {
-        use prost::Message;
-        let mut stream = self.client.connect(dest, "rooms.service").await?;
-        let out_buf = req.encode_to_vec();
-        stream.write(&out_buf).await?;
-        let in_buf = stream.read().await?;
-        GetRooms::decode(in_buf.as_slice()).ok()
-    }
-    pub async fn peers(&self, dest: D, req: GetPeerParams) -> Option<GetPeers> {
-        use prost::Message;
-        let mut stream = self.client.connect(dest, "peers.service").await?;
-        let out_buf = req.encode_to_vec();
-        stream.write(&out_buf).await?;
-        let in_buf = stream.read().await?;
-        GetPeers::decode(in_buf.as_slice()).ok()
-    }
-    pub async fn sessions(&self, dest: D, req: GetParams) -> Option<GetSessions> {
-        use prost::Message;
-        let mut stream = self.client.connect(dest, "sessions.service").await?;
-        let out_buf = req.encode_to_vec();
-        stream.write(&out_buf).await?;
-        let in_buf = stream.read().await?;
-        GetSessions::decode(in_buf.as_slice()).ok()
-    }
-    pub async fn events(&self, dest: D, req: GetEventParams) -> Option<GetEvents> {
-        use prost::Message;
-        let mut stream = self.client.connect(dest, "events.service").await?;
-        let out_buf = req.encode_to_vec();
-        stream.write(&out_buf).await?;
-        let in_buf = stream.read().await?;
-        GetEvents::decode(in_buf.as_slice()).ok()
-    }
-}
-pub struct MediaConnectorServiceServer<
-    CTX,
-    H: MediaConnectorServiceHandler<CTX>,
-    Sr: crate::rpc::RpcServer<S>,
-    S: crate::rpc::RpcStream,
-> {
-    ctx: std::sync::Arc<CTX>,
-    handler: std::sync::Arc<H>,
-    server: Sr,
-    _tmp: std::marker::PhantomData<S>,
-}
-impl<
-    CTX: 'static + Clone,
-    H: 'static + MediaConnectorServiceHandler<CTX>,
-    Sr: crate::rpc::RpcServer<S>,
-    S: 'static + crate::rpc::RpcStream,
-> MediaConnectorServiceServer<CTX, H, Sr, S> {
-    pub fn new(server: Sr, ctx: CTX, handler: H) -> Self {
-        Self {
-            ctx: std::sync::Arc::new(ctx),
-            handler: std::sync::Arc::new(handler),
-            server,
-            _tmp: Default::default(),
-        }
-    }
-    pub async fn run(&mut self) {
-        let local = tokio::task::LocalSet::new();
-        local
-            .run_until(async move {
-                self.run_local().await;
-            })
-            .await;
-    }
-    async fn run_local(&mut self) {
-        use prost::Message;
-        while let Some((domain, mut stream)) = self.server.accept().await {
-            let ctx = self.ctx.clone();
-            let handler = self.handler.clone();
-            match domain.as_str() {
-                "rooms.service" => {
-                    tokio::task::spawn_local(async move {
-                        if let Some(in_buf) = stream.read().await {
-                            if let Ok(req) = GetParams::decode(in_buf.as_slice()) {
-                                if let Some(res) = handler.rooms(&ctx, req).await {
-                                    let out_buf = res.encode_to_vec();
-                                    stream.write(&out_buf).await;
-                                    stream.close().await;
-                                }
-                            }
-                        }
-                    });
-                }
-                "peers.service" => {
-                    tokio::task::spawn_local(async move {
-                        if let Some(in_buf) = stream.read().await {
-                            if let Ok(req) = GetPeerParams::decode(in_buf.as_slice()) {
-                                if let Some(res) = handler.peers(&ctx, req).await {
-                                    let out_buf = res.encode_to_vec();
-                                    stream.write(&out_buf).await;
-                                    stream.close().await;
-                                }
-                            }
-                        }
-                    });
-                }
-                "sessions.service" => {
-                    tokio::task::spawn_local(async move {
-                        if let Some(in_buf) = stream.read().await {
-                            if let Ok(req) = GetParams::decode(in_buf.as_slice()) {
-                                if let Some(res) = handler.sessions(&ctx, req).await {
-                                    let out_buf = res.encode_to_vec();
-                                    stream.write(&out_buf).await;
-                                    stream.close().await;
-                                }
-                            }
-                        }
-                    });
-                }
-                "events.service" => {
-                    tokio::task::spawn_local(async move {
-                        if let Some(in_buf) = stream.read().await {
-                            if let Ok(req) = GetEventParams::decode(in_buf.as_slice()) {
-                                if let Some(res) = handler.events(&ctx, req).await {
-                                    let out_buf = res.encode_to_vec();
-                                    stream.write(&out_buf).await;
-                                    stream.close().await;
-                                }
-                            }
-                        }
-                    });
-                }
-                _ => {}
+        pub fn from_arc(inner: Arc<T>) -> Self {
+            Self {
+                inner,
+                accept_compression_encodings: Default::default(),
+                send_compression_encodings: Default::default(),
+                max_decoding_message_size: None,
+                max_encoding_message_size: None,
             }
         }
+        pub fn with_interceptor<F>(
+            inner: T,
+            interceptor: F,
+        ) -> InterceptedService<Self, F>
+        where
+            F: tonic::service::Interceptor,
+        {
+            InterceptedService::new(Self::new(inner), interceptor)
+        }
+        /// Enable decompressing requests with the given encoding.
+        #[must_use]
+        pub fn accept_compressed(mut self, encoding: CompressionEncoding) -> Self {
+            self.accept_compression_encodings.enable(encoding);
+            self
+        }
+        /// Compress responses with the given encoding, if the client supports it.
+        #[must_use]
+        pub fn send_compressed(mut self, encoding: CompressionEncoding) -> Self {
+            self.send_compression_encodings.enable(encoding);
+            self
+        }
+        /// Limits the maximum size of a decoded message.
+        ///
+        /// Default: `4MB`
+        #[must_use]
+        pub fn max_decoding_message_size(mut self, limit: usize) -> Self {
+            self.max_decoding_message_size = Some(limit);
+            self
+        }
+        /// Limits the maximum size of an encoded message.
+        ///
+        /// Default: `usize::MAX`
+        #[must_use]
+        pub fn max_encoding_message_size(mut self, limit: usize) -> Self {
+            self.max_encoding_message_size = Some(limit);
+            self
+        }
+    }
+    impl<T, B> tonic::codegen::Service<http::Request<B>> for MediaConnectorServer<T>
+    where
+        T: MediaConnector,
+        B: Body + std::marker::Send + 'static,
+        B::Error: Into<StdError> + std::marker::Send + 'static,
+    {
+        type Response = http::Response<tonic::body::BoxBody>;
+        type Error = std::convert::Infallible;
+        type Future = BoxFuture<Self::Response, Self::Error>;
+        fn poll_ready(
+            &mut self,
+            _cx: &mut Context<'_>,
+        ) -> Poll<std::result::Result<(), Self::Error>> {
+            Poll::Ready(Ok(()))
+        }
+        fn call(&mut self, req: http::Request<B>) -> Self::Future {
+            match req.uri().path() {
+                "/cluster_connector.MediaConnector/Rooms" => {
+                    #[allow(non_camel_case_types)]
+                    struct RoomsSvc<T: MediaConnector>(pub Arc<T>);
+                    impl<T: MediaConnector> tonic::server::UnaryService<super::GetParams>
+                    for RoomsSvc<T> {
+                        type Response = super::GetRooms;
+                        type Future = BoxFuture<
+                            tonic::Response<Self::Response>,
+                            tonic::Status,
+                        >;
+                        fn call(
+                            &mut self,
+                            request: tonic::Request<super::GetParams>,
+                        ) -> Self::Future {
+                            let inner = Arc::clone(&self.0);
+                            let fut = async move {
+                                <T as MediaConnector>::rooms(&inner, request).await
+                            };
+                            Box::pin(fut)
+                        }
+                    }
+                    let accept_compression_encodings = self.accept_compression_encodings;
+                    let send_compression_encodings = self.send_compression_encodings;
+                    let max_decoding_message_size = self.max_decoding_message_size;
+                    let max_encoding_message_size = self.max_encoding_message_size;
+                    let inner = self.inner.clone();
+                    let fut = async move {
+                        let method = RoomsSvc(inner);
+                        let codec = tonic::codec::ProstCodec::default();
+                        let mut grpc = tonic::server::Grpc::new(codec)
+                            .apply_compression_config(
+                                accept_compression_encodings,
+                                send_compression_encodings,
+                            )
+                            .apply_max_message_size_config(
+                                max_decoding_message_size,
+                                max_encoding_message_size,
+                            );
+                        let res = grpc.unary(method, req).await;
+                        Ok(res)
+                    };
+                    Box::pin(fut)
+                }
+                "/cluster_connector.MediaConnector/Peers" => {
+                    #[allow(non_camel_case_types)]
+                    struct PeersSvc<T: MediaConnector>(pub Arc<T>);
+                    impl<
+                        T: MediaConnector,
+                    > tonic::server::UnaryService<super::GetPeerParams> for PeersSvc<T> {
+                        type Response = super::GetPeers;
+                        type Future = BoxFuture<
+                            tonic::Response<Self::Response>,
+                            tonic::Status,
+                        >;
+                        fn call(
+                            &mut self,
+                            request: tonic::Request<super::GetPeerParams>,
+                        ) -> Self::Future {
+                            let inner = Arc::clone(&self.0);
+                            let fut = async move {
+                                <T as MediaConnector>::peers(&inner, request).await
+                            };
+                            Box::pin(fut)
+                        }
+                    }
+                    let accept_compression_encodings = self.accept_compression_encodings;
+                    let send_compression_encodings = self.send_compression_encodings;
+                    let max_decoding_message_size = self.max_decoding_message_size;
+                    let max_encoding_message_size = self.max_encoding_message_size;
+                    let inner = self.inner.clone();
+                    let fut = async move {
+                        let method = PeersSvc(inner);
+                        let codec = tonic::codec::ProstCodec::default();
+                        let mut grpc = tonic::server::Grpc::new(codec)
+                            .apply_compression_config(
+                                accept_compression_encodings,
+                                send_compression_encodings,
+                            )
+                            .apply_max_message_size_config(
+                                max_decoding_message_size,
+                                max_encoding_message_size,
+                            );
+                        let res = grpc.unary(method, req).await;
+                        Ok(res)
+                    };
+                    Box::pin(fut)
+                }
+                "/cluster_connector.MediaConnector/Sessions" => {
+                    #[allow(non_camel_case_types)]
+                    struct SessionsSvc<T: MediaConnector>(pub Arc<T>);
+                    impl<T: MediaConnector> tonic::server::UnaryService<super::GetParams>
+                    for SessionsSvc<T> {
+                        type Response = super::GetSessions;
+                        type Future = BoxFuture<
+                            tonic::Response<Self::Response>,
+                            tonic::Status,
+                        >;
+                        fn call(
+                            &mut self,
+                            request: tonic::Request<super::GetParams>,
+                        ) -> Self::Future {
+                            let inner = Arc::clone(&self.0);
+                            let fut = async move {
+                                <T as MediaConnector>::sessions(&inner, request).await
+                            };
+                            Box::pin(fut)
+                        }
+                    }
+                    let accept_compression_encodings = self.accept_compression_encodings;
+                    let send_compression_encodings = self.send_compression_encodings;
+                    let max_decoding_message_size = self.max_decoding_message_size;
+                    let max_encoding_message_size = self.max_encoding_message_size;
+                    let inner = self.inner.clone();
+                    let fut = async move {
+                        let method = SessionsSvc(inner);
+                        let codec = tonic::codec::ProstCodec::default();
+                        let mut grpc = tonic::server::Grpc::new(codec)
+                            .apply_compression_config(
+                                accept_compression_encodings,
+                                send_compression_encodings,
+                            )
+                            .apply_max_message_size_config(
+                                max_decoding_message_size,
+                                max_encoding_message_size,
+                            );
+                        let res = grpc.unary(method, req).await;
+                        Ok(res)
+                    };
+                    Box::pin(fut)
+                }
+                "/cluster_connector.MediaConnector/Events" => {
+                    #[allow(non_camel_case_types)]
+                    struct EventsSvc<T: MediaConnector>(pub Arc<T>);
+                    impl<
+                        T: MediaConnector,
+                    > tonic::server::UnaryService<super::GetEventParams>
+                    for EventsSvc<T> {
+                        type Response = super::GetEvents;
+                        type Future = BoxFuture<
+                            tonic::Response<Self::Response>,
+                            tonic::Status,
+                        >;
+                        fn call(
+                            &mut self,
+                            request: tonic::Request<super::GetEventParams>,
+                        ) -> Self::Future {
+                            let inner = Arc::clone(&self.0);
+                            let fut = async move {
+                                <T as MediaConnector>::events(&inner, request).await
+                            };
+                            Box::pin(fut)
+                        }
+                    }
+                    let accept_compression_encodings = self.accept_compression_encodings;
+                    let send_compression_encodings = self.send_compression_encodings;
+                    let max_decoding_message_size = self.max_decoding_message_size;
+                    let max_encoding_message_size = self.max_encoding_message_size;
+                    let inner = self.inner.clone();
+                    let fut = async move {
+                        let method = EventsSvc(inner);
+                        let codec = tonic::codec::ProstCodec::default();
+                        let mut grpc = tonic::server::Grpc::new(codec)
+                            .apply_compression_config(
+                                accept_compression_encodings,
+                                send_compression_encodings,
+                            )
+                            .apply_max_message_size_config(
+                                max_decoding_message_size,
+                                max_encoding_message_size,
+                            );
+                        let res = grpc.unary(method, req).await;
+                        Ok(res)
+                    };
+                    Box::pin(fut)
+                }
+                _ => {
+                    Box::pin(async move {
+                        let mut response = http::Response::new(empty_body());
+                        let headers = response.headers_mut();
+                        headers
+                            .insert(
+                                tonic::Status::GRPC_STATUS,
+                                (tonic::Code::Unimplemented as i32).into(),
+                            );
+                        headers
+                            .insert(
+                                http::header::CONTENT_TYPE,
+                                tonic::metadata::GRPC_CONTENT_TYPE,
+                            );
+                        Ok(response)
+                    })
+                }
+            }
+        }
+    }
+    impl<T> Clone for MediaConnectorServer<T> {
+        fn clone(&self) -> Self {
+            let inner = self.inner.clone();
+            Self {
+                inner,
+                accept_compression_encodings: self.accept_compression_encodings,
+                send_compression_encodings: self.send_compression_encodings,
+                max_decoding_message_size: self.max_decoding_message_size,
+                max_encoding_message_size: self.max_encoding_message_size,
+            }
+        }
+    }
+    /// Generated gRPC service name
+    pub const SERVICE_NAME: &str = "cluster_connector.MediaConnector";
+    impl<T> tonic::server::NamedService for MediaConnectorServer<T> {
+        const NAME: &'static str = SERVICE_NAME;
     }
 }

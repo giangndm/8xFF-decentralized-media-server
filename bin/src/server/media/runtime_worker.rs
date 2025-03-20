@@ -7,7 +7,7 @@ use media_server_protocol::{
     record::SessionRecordEvent,
     transport::{RpcReq, RpcRes},
 };
-use media_server_runner::{Input as WorkerInput, MediaConfig, MediaServerWorker, Output as WorkerOutput, Owner, UserData, SC, SE, TC, TW};
+use media_server_runner::{Input as WorkerInput, MediaConfig, MediaServerController, Output as WorkerOutput, Owner, UserData, SC, SE, TC, TW};
 use media_server_secure::MediaEdgeSecure;
 use sans_io_runtime::{BusChannelControl, BusControl, BusEvent, WorkerInner, WorkerInnerInput, WorkerInnerOutput};
 
@@ -48,7 +48,7 @@ type Output = WorkerInnerOutput<Owner, ExtOut, Channel, Event, SCfg>;
 
 pub struct MediaRuntimeWorker<ES: 'static + MediaEdgeSecure> {
     index: u16,
-    worker: MediaServerWorker<ES>,
+    worker: MediaServerController<ES>,
     queue: VecDeque<Output>,
     shutdown: bool,
 }
@@ -61,7 +61,7 @@ impl<ES: 'static + MediaEdgeSecure> WorkerInner<Owner, ExtIn, ExtOut, Channel, E
             queue.push_back(Output::Bus(BusControl::Channel(Owner::Sdn, BusChannelControl::Subscribe(Channel::Controller))));
         }
 
-        let worker = MediaServerWorker::new(
+        let worker = MediaServerController::new(
             index,
             cfg.node.node_id,
             cfg.session,

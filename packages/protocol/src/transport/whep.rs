@@ -95,9 +95,9 @@ impl<Conn: ConnLayer> RpcRes<Conn> {
     }
 }
 
-impl TryFrom<protobuf::cluster_gateway::WhepConnectRequest> for WhepConnectReq {
+impl TryFrom<protobuf::cluster_media::WhepConnectRequest> for WhepConnectReq {
     type Error = ();
-    fn try_from(value: protobuf::cluster_gateway::WhepConnectRequest) -> Result<Self, Self::Error> {
+    fn try_from(value: protobuf::cluster_media::WhepConnectRequest) -> Result<Self, Self::Error> {
         Ok(Self {
             app: value.app.into(),
             session_id: value.session_id,
@@ -111,9 +111,9 @@ impl TryFrom<protobuf::cluster_gateway::WhepConnectRequest> for WhepConnectReq {
     }
 }
 
-impl From<WhepConnectReq> for protobuf::cluster_gateway::WhepConnectRequest {
+impl From<WhepConnectReq> for protobuf::cluster_media::WhepConnectRequest {
     fn from(val: WhepConnectReq) -> Self {
-        protobuf::cluster_gateway::WhepConnectRequest {
+        protobuf::cluster_media::WhepConnectRequest {
             app: Some(val.app.into()),
             session_id: val.session_id,
             user_agent: val.user_agent,

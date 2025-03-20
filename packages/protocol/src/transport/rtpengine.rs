@@ -85,9 +85,9 @@ impl<Conn: ConnLayer> RpcRes<Conn> {
     }
 }
 
-impl TryFrom<protobuf::cluster_gateway::RtpEngineCreateOfferRequest> for RtpCreateOfferRequest {
+impl TryFrom<protobuf::cluster_media::RtpEngineCreateOfferRequest> for RtpCreateOfferRequest {
     type Error = ();
-    fn try_from(value: protobuf::cluster_gateway::RtpEngineCreateOfferRequest) -> Result<Self, Self::Error> {
+    fn try_from(value: protobuf::cluster_media::RtpEngineCreateOfferRequest) -> Result<Self, Self::Error> {
         Ok(Self {
             app: value.app.into(),
             session_id: value.session_id,
@@ -99,9 +99,9 @@ impl TryFrom<protobuf::cluster_gateway::RtpEngineCreateOfferRequest> for RtpCrea
     }
 }
 
-impl From<RtpCreateOfferRequest> for protobuf::cluster_gateway::RtpEngineCreateOfferRequest {
+impl From<RtpCreateOfferRequest> for protobuf::cluster_media::RtpEngineCreateOfferRequest {
     fn from(val: RtpCreateOfferRequest) -> Self {
-        protobuf::cluster_gateway::RtpEngineCreateOfferRequest {
+        protobuf::cluster_media::RtpEngineCreateOfferRequest {
             app: Some(val.app.into()),
             session_id: val.session_id,
             room: val.room.into(),
@@ -112,9 +112,9 @@ impl From<RtpCreateOfferRequest> for protobuf::cluster_gateway::RtpEngineCreateO
     }
 }
 
-impl TryFrom<protobuf::cluster_gateway::RtpEngineCreateAnswerRequest> for RtpCreateAnswerRequest {
+impl TryFrom<protobuf::cluster_media::RtpEngineCreateAnswerRequest> for RtpCreateAnswerRequest {
     type Error = ();
-    fn try_from(value: protobuf::cluster_gateway::RtpEngineCreateAnswerRequest) -> Result<Self, Self::Error> {
+    fn try_from(value: protobuf::cluster_media::RtpEngineCreateAnswerRequest) -> Result<Self, Self::Error> {
         Ok(Self {
             app: value.app.into(),
             session_id: value.session_id,
@@ -127,9 +127,9 @@ impl TryFrom<protobuf::cluster_gateway::RtpEngineCreateAnswerRequest> for RtpCre
     }
 }
 
-impl From<RtpCreateAnswerRequest> for protobuf::cluster_gateway::RtpEngineCreateAnswerRequest {
+impl From<RtpCreateAnswerRequest> for protobuf::cluster_media::RtpEngineCreateAnswerRequest {
     fn from(val: RtpCreateAnswerRequest) -> Self {
-        protobuf::cluster_gateway::RtpEngineCreateAnswerRequest {
+        protobuf::cluster_media::RtpEngineCreateAnswerRequest {
             app: Some(val.app.into()),
             session_id: val.session_id,
             sdp: val.sdp,

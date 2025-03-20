@@ -9,11 +9,14 @@ description = "Media Gateway Component for Atm0s Media Server"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
+media-server-protocol = { workspace = true }
+
 log = { workspace = true }
 serde = { workspace = true, features = ["derive"] }
-media-server-protocol = { workspace = true }
 atm0s-sdn = { workspace = true }
 prost = { workspace = true }
 spin = { workspace = true }
 derive_more = { workspace = true }
 tokio = { workspace = true, features = ["time"] }
+async-trait = { workspace = true }
+tonic = { workspace = true }

@@ -145,34 +145,13 @@ pub struct MediaServerWorker<ES: 'static + MediaEdgeSecure> {
 impl<ES: 'static + MediaEdgeSecure> MediaServerWorker<ES> {
     #[allow(clippy::too_many_arguments)]
     pub fn new(worker: u16, node_id: u32, session: u64, secret: &str, controller: bool, sdn_bind_addrs: Vec<SocketAddr>, sdn_custom_addrs: Vec<SocketAddr>, media: MediaConfig<ES>) -> Self {
-        let secure = media.secure.clone(); //TODO why need this?
-        let mut media_max_live = 0;
-        for (_, max) in media.max_live.iter() {
-            media_max_live += *max;
-        }
         let node_addr = generate_node_addr(node_id, &sdn_bind_addrs, sdn_custom_addrs);
-        let node_info = ClusterNodeInfo::Media(
-            ClusterNodeGenericInfo {
-                addr: node_addr.to_string(),
-                cpu: 0,
-                memory: 0,
-                disk: 0,
-            },
-            ClusterMediaInfo { live: 0, max: media_max_live },
-        );
 
         let visualization = Arc::new(visualization::VisualizationServiceBuilder::new(node_info, false));
         let discovery = Arc::new(manual2_discovery::Manual2DiscoveryServiceBuilder::new(node_addr.clone(), vec![], 1000));
         let history = Arc::new(DataWorkerHistory::default());
 
         let mut services: Vec<Arc<WServiceBuilder>> = vec![visualization, discovery];
-        if media.enable_gateway_agent {
-            services.push(Arc::new(GatewayAgentServiceBuilder::new(media.max_live)));
-        }
-        if media.enable_connector_agent {
-            services.push(Arc::new(ConnectorAgentServiceBuilder::new()));
-        }
-
         let sdn_config = SdnConfig {
             node_id,
             controller: if controller {
