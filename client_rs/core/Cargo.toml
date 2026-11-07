@@ -1,0 +1,10 @@
+[package]
+name = "atm0s-media-client-core"
+version = "0.1.0"
+edition = "2021"
+rust-version = "1.84"
+publish = false
+
+[dependencies]
+media-server-protocol = { package = "atm0s-media-server-protocol", path = "../../packages/protocol", default-features = false }
+prost = "0.13"

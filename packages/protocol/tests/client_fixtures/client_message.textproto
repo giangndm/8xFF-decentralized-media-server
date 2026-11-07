@@ -1,0 +1,8 @@
+seq: 42
+request {
+  req_id: 7
+  message_channel {
+    label: "bytes"
+    pub { data: "\000\001\177\200\377" }
+  }
+}

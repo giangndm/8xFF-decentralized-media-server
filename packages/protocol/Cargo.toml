@@ -9,23 +9,25 @@ description = "Core Protocol Component for Atm0s Media Server"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-bincode = { workspace = true }
-log = { workspace = true }
-convert-enum = { workspace = true }
-derivative = { workspace = true }
-derive_more = { workspace = true, features = ["full"] }
-rand = { workspace = true }
+bincode = { workspace = true, optional = true }
+log = { workspace = true, optional = true }
+convert-enum = { workspace = true, optional = true }
+derivative = { workspace = true, optional = true }
+derive_more = { workspace = true, features = ["full"], optional = true }
+rand = { workspace = true, optional = true }
 prost = { workspace = true }
 serde = { workspace = true, features = ["derive"] }
 quinn = { workspace = true, optional = true }
-tokio = { workspace = true, features = ["rt"] }
+tokio = { workspace = true, features = ["rt"], optional = true }
 
 [build-dependencies]
-prost-build = { workspace = true }
-tera = { workspace = true }
+prost-build = { workspace = true, optional = true }
+tera = { workspace = true, optional = true }
 serde = { workspace = true, features = ["derive"] }
 
 [features]
-default = []
-build-protobuf = []
-quinn-rpc = ["quinn"]
+default = ["server"]
+# Disable defaults for a portable Protobuf-only dependency (including WASM).
+server = ["dep:bincode", "dep:log", "dep:convert-enum", "dep:derivative", "dep:derive_more", "dep:rand", "dep:tokio"]
+build-protobuf = ["dep:prost-build", "dep:tera"]
+quinn-rpc = ["server", "dep:quinn"]

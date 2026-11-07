@@ -1,0 +1,5 @@
+seq: 99
+response {
+  req_id: 7
+  error { code: 403 message: "permission denied" }
+}

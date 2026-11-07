@@ -1,0 +1,12 @@
+[package]
+name = "atm0s-media-client-mock"
+version = "0.1.0"
+edition = "2021"
+rust-version = "1.84"
+publish = false
+
+[dependencies]
+atm0s-media-client-core = { path = "../core" }
+media-server-protocol = { package = "atm0s-media-server-protocol", path = "../../packages/protocol", default-features = false }
+futures = { workspace = true }
+prost = "0.13"

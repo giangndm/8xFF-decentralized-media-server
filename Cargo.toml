@@ -1,6 +1,10 @@
 [workspace]
 resolver = "2"
 members = [
+    "client_rs/core",
+    "client_rs/browser",
+    "client_rs/mock",
+    "client_rs/browser/examples",
     "bin",
     "packages/audio_mixer",
     "packages/protocol",

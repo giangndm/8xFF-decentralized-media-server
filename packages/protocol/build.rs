@@ -11,7 +11,6 @@ fn main() -> Result<()> {
     Config::new()
         .service_generator(Box::new(GenericRpcGenerator))
         .out_dir("src/protobuf")
-        .include_file("mod.rs")
         .type_attribute(".", "#[derive(serde::Serialize)]")
         .protoc_arg("--experimental_allow_proto3_optional")
         .compile_protos(

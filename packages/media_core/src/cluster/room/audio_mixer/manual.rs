@@ -36,6 +36,7 @@ pub struct ManualMixer<Endpoint: Debug> {
     _c: Count<Self>,
     endpoint: Endpoint,
     room: ClusterRoomHash,
+    joined: bool,
     outputs: Vec<LocalTrackId>,
     sources: IndexMap<ChannelId, TrackSource>,
     queue: DynamicDeque<Output<Endpoint>, 4>,
@@ -48,6 +49,7 @@ impl<Endpoint: Debug + Clone> ManualMixer<Endpoint> {
             _c: Default::default(),
             endpoint,
             room,
+            joined: true,
             mixer: audio_mixer::AudioMixer::new(outputs.len()),
             outputs,
             sources: Default::default(),
@@ -127,6 +129,7 @@ impl<Endpoint: Debug + Clone> Task<Input, Output<Endpoint>> for ManualMixer<Endp
                 }
             }
             Input::LeaveRoom => {
+                self.joined = false;
                 // We need manual release sources because it is from client request,
                 // we cannot ensure client will release it before it disconnect.
                 let sources = std::mem::take(&mut self.sources);
@@ -147,7 +150,7 @@ impl<Endpoint: Debug> TaskSwitcherChild<Output<Endpoint>> for ManualMixer<Endpoi
     type Time = ();
 
     fn is_empty(&self) -> bool {
-        self.queue.is_empty() && self.sources.is_empty()
+        !self.joined && self.queue.is_empty() && self.sources.is_empty()
     }
 
     fn empty_event(&self) -> Output<Endpoint> {
@@ -184,6 +187,27 @@ mod test {
 
     fn ms(ms: u64) -> Duration {
         Duration::from_millis(ms)
+    }
+
+    #[test]
+    fn keeps_endpoint_mixer_alive_between_source_changes() {
+        let now = Instant::now();
+        let mut manual = ManualMixer::<u8>::new(0.into(), 1, vec![0.into()]);
+        let source = TrackSource {
+            peer: "peer1".into(),
+            track: "audio".into(),
+        };
+        assert!(!manual.is_empty(), "joining without initial sources must retain the mixer");
+        manual.on_event(now, Input::Attach(vec![source.clone()]));
+        assert!(manual.pop_output(()).is_some());
+        manual.on_event(now, Input::Detach(vec![source.clone()]));
+        assert!(manual.pop_output(()).is_some());
+        assert!(!manual.is_empty(), "detaching the last source must allow a later reattach");
+        manual.on_event(now, Input::Attach(vec![source]));
+        assert!(manual.pop_output(()).is_some());
+        manual.on_event(now, Input::LeaveRoom);
+        assert!(manual.pop_output(()).is_some());
+        assert!(manual.is_empty());
     }
 
     #[test_log::test]

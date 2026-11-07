@@ -1,0 +1,27 @@
+version: "rust-fixture"
+join {
+  room: "room-a"
+  peer: "peer-a"
+  metadata: "metadata"
+  publish { peer: true tracks: true }
+  subscribe { peers: true tracks: true }
+}
+tracks {
+  senders {
+    kind: VIDEO
+    name: "video_main"
+    state {
+      config { priority: 100 bitrate: MAX_BITRATE }
+      source { id: "track-video" screen: true metadata: "screen" }
+    }
+  }
+  receivers {
+    kind: VIDEO
+    name: "video_0"
+    state {
+      config { priority: 7 max_spatial: 2 max_temporal: 2 min_spatial: 0 min_temporal: 0 }
+      source { peer: "remote" track: "video" }
+    }
+  }
+}
+sdp: "v=0\r\n"

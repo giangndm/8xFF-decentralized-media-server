@@ -16,6 +16,7 @@ For a deep dive into the technical aspects of network architecture, please refer
 - [User Guide](./USER_GUIDE.md)
 - [Developer Guide](./DEVELOPER_GUIDE.md)
 - [Architecture](./ARCHITECTURE.md)
+- [Rust client SDK](../client_rs/README.md)
 - [Features](./FEATURES.md)
 - [Runtime/API Spec](./SPEC.md)
 - [Troubleshooting](./TROUBLESHOOTING.md)
